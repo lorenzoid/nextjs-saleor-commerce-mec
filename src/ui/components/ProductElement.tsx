@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { ShoppingBagIcon, Star, StarHalf } from "lucide-react";
 import { cookies } from "next/headers";
-import invariant from "ts-invariant";
+
 import { revalidatePath } from "next/cache";
+import { invariant } from "ts-invariant";
 import { Tooltip } from "../atoms/Tooltip";
 import { ProductImageWrapper } from "@/ui/atoms/ProductImageWrapper";
 
@@ -63,7 +64,7 @@ export function ProductElement({
 						/>
 					</Link>
 				)}
-				<form className="absolute bottom-20 right-2 mb-2 mr-2" action={addItem}>
+				<form className="group absolute bottom-20 right-2 mb-2 mr-2" action={addItem}>
 					<Tooltip text="Add to Cart">
 						<button
 							type="submit"
@@ -92,13 +93,22 @@ export function ProductElement({
 							})}
 						</p>
 						{product.rating ? (
-							<div className="flex justify-items-center text-yellow-400">
-								{Array(fullStars)
-									.fill(null)
-									.map((_, index) => (
-										<Star size={16} key={index} /> // Render the full stars
+							<div className="star-rating end-0 flex">
+								<div className="stars">
+									{Array.from({ length: 5 }, (_, index) => (
+										<Star size={16} fill="#111" key={index} strokeWidth={1} />
 									))}
-								{hasHalfStar && <StarHalf size={16} />}
+								</div>
+								<div className="stars rating">
+									<div className="flex justify-items-center text-yellow-400">
+										{Array(fullStars)
+											.fill(null)
+											.map((_, index) => (
+												<Star key={index} size={16} fill="#FDCC0D" strokeWidth={1} />
+											))}
+										{hasHalfStar && <StarHalf size={16} fill="#FDCC0D" strokeWidth={1} />}
+									</div>
+								</div>
 							</div>
 						) : null}
 					</div>
