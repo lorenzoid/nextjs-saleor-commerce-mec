@@ -4,6 +4,7 @@ query ProductDetails($slug: String!) {
 		name
 		slug
 		description
+		rating
 		seoTitle
 		seoDescription
 		thumbnail(size: 1024, format: WEBP) {

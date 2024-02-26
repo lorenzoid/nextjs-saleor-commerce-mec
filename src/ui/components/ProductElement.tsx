@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { ShoppingBagIcon, Star, StarHalf } from "lucide-react";
+import { ShoppingBagIcon } from "lucide-react";
 import { cookies } from "next/headers";
 
 import { revalidatePath } from "next/cache";
 import { invariant } from "ts-invariant";
 import { Tooltip } from "../atoms/Tooltip";
+import { Rating } from "../atoms/Rating";
 import { ProductImageWrapper } from "@/ui/atoms/ProductImageWrapper";
 
 import { CheckoutAddLineDocument, type ProductListItemFragment } from "@/gql/graphql";
@@ -44,10 +45,6 @@ export function ProductElement({
 
 		revalidatePath("/cart");
 	}
-
-	const rating = product.rating ?? 0; // Coalesce to 0 if null or undefined
-	const fullStars = Math.floor(rating);
-	const hasHalfStar = rating % 1 !== 0;
 
 	return (
 		<li data-testid="ProductElement">
@@ -93,25 +90,7 @@ export function ProductElement({
 								stop: product?.pricing?.priceRange?.stop?.gross,
 							})}
 						</p>
-						{product.rating ? (
-							<div className="star-rating end-0 flex">
-								<div className="stars">
-									{Array.from({ length: 5 }, (_, index) => (
-										<Star size={16} fill="#111" key={index} strokeWidth={1} />
-									))}
-								</div>
-								<div className="stars rating">
-									<div className="flex justify-items-center text-yellow-400">
-										{Array(fullStars)
-											.fill(null)
-											.map((_, index) => (
-												<Star key={index} size={16} fill="#FDCC0D" strokeWidth={1} />
-											))}
-										{hasHalfStar && <StarHalf size={16} fill="#FDCC0D" strokeWidth={1} />}
-									</div>
-								</div>
-							</div>
-						) : null}
+						{product.rating ? <Rating size={16} rating={product.rating} /> : null}
 					</div>
 				</div>
 			</div>

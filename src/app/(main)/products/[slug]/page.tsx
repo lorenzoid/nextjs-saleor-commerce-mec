@@ -13,6 +13,7 @@ import { executeGraphQL, formatMoney, formatMoneyRange } from "@/lib/graphql";
 import { CheckoutAddLineDocument, ProductDetailsDocument, ProductListDocument } from "@/gql/graphql";
 import * as Checkout from "@/lib/checkout";
 import { AvailabilityMessage } from "@/ui/components/AvailabilityMessage";
+import { Rating } from "@/ui/atoms/Rating";
 
 const shouldUseHttps =
 	process.env.NEXT_PUBLIC_STOREFRONT_URL?.startsWith("https") || !!process.env.NEXT_PUBLIC_VERCEL_URL;
@@ -196,9 +197,13 @@ export default async function Page(props: { params: { slug: string }; searchPara
 						<h1 className="mb-4 flex-auto text-3xl font-bold tracking-tight text-neutral-900">
 							{product?.name}
 						</h1>
-						<p className="mb-8 text-sm font-medium text-neutral-900" data-testid="ProductElement_Price">
-							{price}
-						</p>
+						<div className="flex justify-between">
+							<p className="mb-8 text-sm font-medium text-neutral-900" data-testid="ProductElement_Price">
+								{price}
+							</p>
+							<Rating size={16} rating={product.rating!} />
+						</div>
+
 						{variants && (
 							<VariantSelector selectedVariant={selectedVariant} variants={variants} product={product} />
 						)}
