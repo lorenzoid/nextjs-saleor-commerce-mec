@@ -23,6 +23,7 @@ export function ProductElement({
 		"use server";
 
 		const variants = product.variants || [];
+		const defaultVariant = product.defaultVariant;
 
 		const checkout = await Checkout.findOrCreate(cookies().get("checkoutId")?.value);
 		invariant(checkout, "This should never happen");
@@ -36,7 +37,7 @@ export function ProductElement({
 		await executeGraphQL(CheckoutAddLineDocument, {
 			variables: {
 				id: checkout.id,
-				productVariantId: variants[0].id,
+				productVariantId: variants.length > 1 ? defaultVariant!.id : variants[0].id,
 			},
 			cache: "no-cache",
 		});
