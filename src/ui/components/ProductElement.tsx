@@ -92,13 +92,22 @@ export function ProductElement({
 							})}
 						</p>
 						{product.rating ? (
-							<div className="flex justify-items-center text-yellow-400">
-								{Array(fullStars)
-									.fill(null)
-									.map((_, index) => (
-										<Star size={16} key={index} /> // Render the full stars
+							<div className="star-rating end-0 flex">
+								<div className="stars">
+									{Array.from({ length: 5 }, (_, index) => (
+										<Star size={16} fill="#111" key={index} strokeWidth={1} />
 									))}
-								{hasHalfStar && <StarHalf size={16} />}
+								</div>
+								<div className="stars rating">
+									<div className="flex justify-items-center text-yellow-400">
+										{Array(fullStars)
+											.fill(null)
+											.map((_, index) => (
+												<Star key={index} size={16} fill="#FDCC0D" strokeWidth={1} />
+											))}
+										{hasHalfStar && <StarHalf size={16} fill="#FDCC0D" strokeWidth={1} />}
+									</div>
+								</div>
 							</div>
 						) : null}
 					</div>

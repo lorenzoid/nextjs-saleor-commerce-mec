@@ -14,3 +14,16 @@ body {
 .product-wrapper:hover .add-to-cart-button {
 	display: flex; /* Show the button on hover */
 }
+
+.star-rating {
+	position: relative;
+}
+
+.stars {
+	display: flex;
+}
+
+.rating {
+	position: absolute;
+	top: 0;
+}
