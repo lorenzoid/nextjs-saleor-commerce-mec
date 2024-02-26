@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { ShoppingBagIcon, Star, StarHalf } from "lucide-react";
 import { cookies } from "next/headers";
-import invariant from "ts-invariant";
+
 import { revalidatePath } from "next/cache";
+import { invariant } from "ts-invariant";
 import { Tooltip } from "../atoms/Tooltip";
 import { ProductImageWrapper } from "@/ui/atoms/ProductImageWrapper";
 
