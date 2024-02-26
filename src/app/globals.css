@@ -5,3 +5,12 @@
 body {
 	overflow-x: hidden;
 }
+
+.add-to-cart-button {
+	display: none; /* Hide the button by default */
+	transition: all 0.3s ease; /* Optional: Adds a transition effect */
+}
+
+.product-wrapper:hover .add-to-cart-button {
+	display: flex; /* Show the button on hover */
+}
