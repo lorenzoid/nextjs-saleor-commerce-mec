@@ -15,6 +15,16 @@ body {
 	display: flex; /* Show the button on hover */
 }
 
+.tooltip-content {
+	transition: opacity 0.3s ease-in-out;
+	opacity: 0;
+}
+
+.group:hover .tooltip-content {
+	opacity: 1;
+	display: flex; /* Ensure this matches your initial non-hover display state if different */
+}
+
 .star-rating {
 	position: relative;
 }

@@ -64,7 +64,7 @@ export function ProductElement({
 						/>
 					</Link>
 				)}
-				<form className="absolute bottom-20 right-2 mb-2 mr-2" action={addItem}>
+				<form className="group absolute bottom-20 right-2 mb-2 mr-2" action={addItem}>
 					<Tooltip text="Add to Cart">
 						<button
 							type="submit"
