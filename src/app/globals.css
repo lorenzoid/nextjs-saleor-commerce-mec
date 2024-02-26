@@ -7,12 +7,13 @@ body {
 }
 
 .add-to-cart-button {
-	display: none; /* Hide the button by default */
-	transition: all 0.3s ease; /* Optional: Adds a transition effect */
+	opacity: 0;
+	transition: opacity 0.3s ease-in-out;
 }
 
 .product-wrapper:hover .add-to-cart-button {
 	display: flex; /* Show the button on hover */
+	opacity: 1;
 }
 
 .tooltip-content {
