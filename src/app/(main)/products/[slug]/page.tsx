@@ -112,6 +112,11 @@ export default async function Page(props: { params: { slug: string }; searchPara
 			return;
 		}
 
+		console.log({
+			id: checkout.id,
+			productVariantId: decodeURIComponent(selectedVariantID),
+		});
+
 		// TODO: error handling
 		await executeGraphQL(CheckoutAddLineDocument, {
 			variables: {
@@ -194,7 +199,6 @@ export default async function Page(props: { params: { slug: string }; searchPara
 						<p className="mb-8 text-sm font-medium text-neutral-900" data-testid="ProductElement_Price">
 							{price}
 						</p>
-
 						{variants && (
 							<VariantSelector selectedVariant={selectedVariant} variants={variants} product={product} />
 						)}
@@ -205,7 +209,7 @@ export default async function Page(props: { params: { slug: string }; searchPara
 								))}
 							</div>
 						)}
-						<AvailabilityMessage isAvailable={isAvailable} />
+						<AvailabilityMessage isAvailable={isAvailable} quantity={selectedVariant?.quantityAvailable} />
 					</div>
 
 					<div className="mt-8">
