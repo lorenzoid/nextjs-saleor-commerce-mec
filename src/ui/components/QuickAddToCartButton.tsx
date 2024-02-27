@@ -72,8 +72,10 @@ export function QuickAddToCartButton(props: QuickAddToCartButtonTypes) {
 		}
 	};
 
+	const hasVariants = variants.length > 1;
+
 	const renderVariants = () => {
-		if (variants) {
+		if (hasVariants) {
 			return (
 				<div className={`variants-container ${showVariants ? "variants-visible" : ""}`}>
 					{variants.map((variant: ProductVariant) => {
@@ -96,14 +98,14 @@ export function QuickAddToCartButton(props: QuickAddToCartButtonTypes) {
 		return null;
 	};
 
-	const hasVariants = variants.length > 1;
+	const toggleDisplayVariants = () => {
+		if (hasVariants) {
+			setShowVariants(!showVariants);
+		}
+	};
 
 	return (
-		<div
-			className="flex"
-			onMouseEnter={() => setShowVariants(true)}
-			onMouseLeave={() => setShowVariants(false)}
-		>
+		<div className="flex" onMouseEnter={toggleDisplayVariants} onMouseLeave={toggleDisplayVariants}>
 			{showVariants && renderVariants()}
 
 			{pending || pendingClient ? (
