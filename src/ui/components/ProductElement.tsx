@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { invariant } from "ts-invariant";
 import { Rating } from "../atoms/Rating";
-import { QuickAddButton } from "./QuickAddButton";
+import { QuickAddToCartButton } from "./QuickAddToCartButton";
 import { ProductImageWrapper } from "@/ui/atoms/ProductImageWrapper";
 import { CheckoutAddLineDocument, type ProductListItemFragment } from "@/gql/graphql";
 import { executeGraphQL, formatMoneyRange } from "@/lib/graphql";
@@ -61,7 +61,11 @@ export function ProductElement({
 					</Link>
 				)}
 				<form id={product.id} className="group absolute bottom-20 right-2 mb-2 mr-2" action={addItem}>
-					<QuickAddButton />
+					<QuickAddToCartButton
+						product={product}
+						checkoutId={cookies().get("checkoutId")?.value}
+						variants={variants || [defaultVariant]}
+					/>
 				</form>
 
 				<div className="mt-2 flex justify-between">

@@ -29,6 +29,9 @@ dependencies:
   clsx:
     specifier: 2.0.0
     version: 2.0.0
+  cookie:
+    specifier: 0.6.0
+    version: 0.6.0
   editorjs-html:
     specifier: 3.4.3
     version: 3.4.3
@@ -112,6 +115,9 @@ devDependencies:
   '@tailwindcss/typography':
     specifier: 0.5.10
     version: 0.5.10(tailwindcss@3.3.5)
+  '@types/cookie':
+    specifier: 0.6.0
+    version: 0.6.0
   '@types/lodash-es':
     specifier: 4.17.11
     version: 4.17.11
@@ -1870,6 +1876,10 @@ packages:
     resolution: {integrity: sha512-RqaVZWy1Kj4e1PoUoOI8uA+4UuuLpicQFxfU9Y/xWJFZFT6mFB4PiiY911iDxFk7pdvaj5HKH7VsWRisRca1Rg==}
     dev: false
 
+  /@types/cookie@0.6.0:
+    resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
+    dev: true
+
   /@types/googlepay@0.7.4:
     resolution: {integrity: sha512-7j0iu4lUQfML5c+3zS8t/BNUJFH5MqKnMWEFD141eWsAXmmm6piJ0p+mJlM2Om61FYGe5pUWKRYB8HlZT7n4rQ==}
     dev: false
@@ -2763,6 +2773,11 @@ packages:
 
   /cookie@0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
+    engines: {node: '>= 0.6'}
+    dev: false
+
+  /cookie@0.6.0:
+    resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
     engines: {node: '>= 0.6'}
     dev: false
 
