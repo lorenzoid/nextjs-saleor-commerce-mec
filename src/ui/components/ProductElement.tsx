@@ -1,12 +1,11 @@
 import Link from "next/link";
-import { ShoppingBagIcon, Star, StarHalf } from "lucide-react";
 import { cookies } from "next/headers";
 
 import { revalidatePath } from "next/cache";
 import { invariant } from "ts-invariant";
-import { Tooltip } from "../atoms/Tooltip";
+import { Rating } from "../atoms/Rating";
+import { QuickAddButton } from "./QuickAddButton";
 import { ProductImageWrapper } from "@/ui/atoms/ProductImageWrapper";
-
 import { CheckoutAddLineDocument, type ProductListItemFragment } from "@/gql/graphql";
 import { executeGraphQL, formatMoneyRange } from "@/lib/graphql";
 import * as Checkout from "@/lib/checkout";
@@ -19,10 +18,11 @@ export function ProductElement({
 	loading,
 	priority,
 }: { product: ProductListItemFragment } & { loading: "eager" | "lazy"; priority?: boolean }) {
+	const variants = product.variants || [];
+	const defaultVariant = product.defaultVariant;
+
 	async function addItem() {
 		"use server";
-
-		const variants = product.variants || [];
 
 		const checkout = await Checkout.findOrCreate(cookies().get("checkoutId")?.value);
 		invariant(checkout, "This should never happen");
@@ -36,17 +36,13 @@ export function ProductElement({
 		await executeGraphQL(CheckoutAddLineDocument, {
 			variables: {
 				id: checkout.id,
-				productVariantId: variants[0].id,
+				productVariantId: variants.length > 1 ? defaultVariant!.id : variants[0].id,
 			},
 			cache: "no-cache",
 		});
 
 		revalidatePath("/cart");
 	}
-
-	const rating = product.rating ?? 0; // Coalesce to 0 if null or undefined
-	const fullStars = Math.floor(rating);
-	const hasHalfStar = rating % 1 !== 0;
 
 	return (
 		<li data-testid="ProductElement">
@@ -64,15 +60,8 @@ export function ProductElement({
 						/>
 					</Link>
 				)}
-				<form className="group absolute bottom-20 right-2 mb-2 mr-2" action={addItem}>
-					<Tooltip text="Add to Cart">
-						<button
-							type="submit"
-							className="add-to-cart-button rounded bg-transparent px-4 py-2 font-semibold  text-gray-500 transition duration-150 ease-in-out hover:border-transparent hover:text-gray-900"
-						>
-							<ShoppingBagIcon className="h-6 w-6 shrink-0" aria-hidden="true" />
-						</button>
-					</Tooltip>
+				<form id={product.id} className="group absolute bottom-20 right-2 mb-2 mr-2" action={addItem}>
+					<QuickAddButton />
 				</form>
 
 				<div className="mt-2 flex justify-between">
@@ -92,25 +81,7 @@ export function ProductElement({
 								stop: product?.pricing?.priceRange?.stop?.gross,
 							})}
 						</p>
-						{product.rating ? (
-							<div className="star-rating end-0 flex">
-								<div className="stars">
-									{Array.from({ length: 5 }, (_, index) => (
-										<Star size={16} fill="#111" key={index} strokeWidth={1} />
-									))}
-								</div>
-								<div className="stars rating">
-									<div className="flex justify-items-center text-yellow-400">
-										{Array(fullStars)
-											.fill(null)
-											.map((_, index) => (
-												<Star key={index} size={16} fill="#FDCC0D" strokeWidth={1} />
-											))}
-										{hasHalfStar && <StarHalf size={16} fill="#FDCC0D" strokeWidth={1} />}
-									</div>
-								</div>
-							</div>
-						) : null}
+						{product.rating ? <Rating size={16} rating={product.rating} /> : null}
 					</div>
 				</div>
 			</div>

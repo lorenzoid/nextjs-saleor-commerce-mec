@@ -2,6 +2,10 @@ fragment ProductListItem on Product {
 	id
 	name
 	slug
+	defaultVariant {
+		id
+		name
+	}
 	variants {
 		id
 		name

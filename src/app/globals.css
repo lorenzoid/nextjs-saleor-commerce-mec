@@ -7,33 +7,16 @@ body {
 }
 
 .add-to-cart-button {
-	display: none; /* Hide the button by default */
-	transition: all 0.3s ease; /* Optional: Adds a transition effect */
+	opacity: 0;
+	transition: all 0.3s ease-in-out;
 }
 
 .product-wrapper:hover .add-to-cart-button {
 	display: flex; /* Show the button on hover */
-}
-
-.tooltip-content {
-	transition: opacity 0.3s ease-in-out;
-	opacity: 0;
-}
-
-.group:hover .tooltip-content {
 	opacity: 1;
-	display: flex; /* Ensure this matches your initial non-hover display state if different */
 }
 
-.star-rating {
-	position: relative;
-}
-
-.stars {
+..product-wrapper:hover .variants-button {
+	opacity: 1;
 	display: flex;
-}
-
-.rating {
-	position: absolute;
-	top: 0;
 }
