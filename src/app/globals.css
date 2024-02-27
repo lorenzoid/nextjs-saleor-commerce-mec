@@ -8,7 +8,7 @@ body {
 
 .add-to-cart-button {
 	opacity: 0;
-	transition: opacity 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
 }
 
 .product-wrapper:hover .add-to-cart-button {
@@ -16,25 +16,7 @@ body {
 	opacity: 1;
 }
 
-.tooltip-content {
-	opacity: 0;
-	transition: opacity 0.3s ease-in-out;
-}
-
-.group:hover .tooltip-content {
-	display: flex;
+..product-wrapper:hover .variants-button {
 	opacity: 1;
-}
-
-.star-rating {
-	position: relative;
-}
-
-.stars {
 	display: flex;
-}
-
-.rating {
-	position: absolute;
-	top: 0;
 }
