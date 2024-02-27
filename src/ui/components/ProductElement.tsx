@@ -62,6 +62,7 @@ export function ProductElement({
 				)}
 				<form id={product.id} className="group absolute bottom-20 right-2 mb-2 mr-2" action={addItem}>
 					<QuickAddToCartButton
+						product={product}
 						checkoutId={cookies().get("checkoutId")?.value}
 						variants={variants || [defaultVariant]}
 					/>

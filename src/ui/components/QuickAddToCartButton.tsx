@@ -1,9 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { useFormStatus } from "react-dom";
 import { ShoppingBagIcon } from "lucide-react";
 import { useState } from "react";
 import { Tooltip } from "../atoms/Tooltip";
+import { type ProductListItemFragment } from "@/gql/graphql";
 
 const PendingLoader = () => (
 	<div className="px-4 py-2">
@@ -30,6 +32,7 @@ type ProductVariant = {
 };
 
 type QuickAddToCartButtonTypes = {
+	product: ProductListItemFragment;
 	checkoutId: string | undefined;
 	variants: ProductVariant[];
 };
@@ -41,7 +44,7 @@ export function QuickAddToCartButton(props: QuickAddToCartButtonTypes) {
 
 	const [pendingClient, setPendingClient] = useState(false);
 
-	const { variants, checkoutId } = props;
+	const { checkoutId, product, variants } = props;
 
 	const handleShowVariants = () => {
 		setShowVariants(true);
@@ -78,12 +81,12 @@ export function QuickAddToCartButton(props: QuickAddToCartButtonTypes) {
 		if (hasVariants) {
 			return (
 				<div className={`variants-container ${showVariants ? "variants-visible" : ""}`}>
-					{variants.map((variant: ProductVariant) => {
+					{variants.slice(0, 5).map((variant: ProductVariant) => {
 						const { id, name } = variant;
 
 						return (
 							<button
-								className="variants-button rounded bg-transparent px-4 py-2 font-semibold text-gray-400 transition duration-150 ease-in-out hover:text-gray-900"
+								className="variants-button rounded bg-transparent px-4 py-2 text-sm font-semibold text-gray-400 transition duration-150 ease-in-out hover:text-gray-900"
 								type="button"
 								onClick={() => handleAddItem(id)}
 								key={id}
@@ -92,6 +95,17 @@ export function QuickAddToCartButton(props: QuickAddToCartButtonTypes) {
 							</button>
 						);
 					})}
+
+					{variants.length > 5 && (
+						<Link href={`/products/${product.slug}`}>
+							<button
+								className="variants-button rounded bg-transparent px-4 py-2 text-sm font-semibold text-gray-400 transition duration-150 ease-in-out hover:text-gray-900"
+								type="button"
+							>
+								...
+							</button>
+						</Link>
+					)}
 				</div>
 			);
 		}
