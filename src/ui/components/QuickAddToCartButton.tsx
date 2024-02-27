@@ -74,27 +74,36 @@ export function QuickAddToCartButton(props: QuickAddToCartButtonTypes) {
 
 	const renderVariants = () => {
 		if (variants) {
-			return variants.map((variant: ProductVariant) => {
-				const { id, name } = variant;
+			return (
+				<div className={`variants-container ${showVariants ? "variants-visible" : ""}`}>
+					{variants.map((variant: ProductVariant) => {
+						const { id, name } = variant;
 
-				return (
-					<button
-						className="variants-button rounded bg-transparent px-4 py-2 font-semibold text-gray-400 transition duration-150 ease-in-out hover:text-gray-900"
-						type="button"
-						onClick={() => handleAddItem(id)}
-						key={id}
-					>
-						{name}
-					</button>
-				);
-			});
+						return (
+							<button
+								className="variants-button rounded bg-transparent px-4 py-2 font-semibold text-gray-400 transition duration-150 ease-in-out hover:text-gray-900"
+								type="button"
+								onClick={() => handleAddItem(id)}
+								key={id}
+							>
+								{name}
+							</button>
+						);
+					})}
+				</div>
+			);
 		}
+		return null;
 	};
 
 	const hasVariants = variants.length > 1;
 
 	return (
-		<div className="flex" onMouseLeave={() => setShowVariants(false)}>
+		<div
+			className="flex"
+			onMouseEnter={() => setShowVariants(true)}
+			onMouseLeave={() => setShowVariants(false)}
+		>
 			{showVariants && renderVariants()}
 
 			{pending || pendingClient ? (

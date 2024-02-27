@@ -16,11 +16,14 @@ body {
 	opacity: 1;
 }
 
-.product-wrapper:hover .variants-button {
-	opacity: 1;
+.variants-container {
 	display: flex;
+	transition: opacity 0.3s ease-in-out;
+	opacity: 0;
+	visibility: hidden;
 }
 
-.variants-button {
-	opacity: 0;
+.variants-visible {
+	opacity: 1;
+	visibility: visible;
 }
