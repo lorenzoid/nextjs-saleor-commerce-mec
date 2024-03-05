@@ -5,7 +5,7 @@ import { useFormStatus } from "react-dom";
 import { ShoppingBagIcon } from "lucide-react";
 import { useState } from "react";
 import { Tooltip } from "../atoms/Tooltip";
-import { type ProductListItemFragment } from "@/gql/graphql";
+import { type VariantDetailsFragment, type ProductListItemFragment } from "@/gql/graphql";
 
 const PendingLoader = () => (
 	<div className="px-4 py-2">
@@ -25,16 +25,10 @@ const PendingLoader = () => (
 	</div>
 );
 
-type ProductVariant = {
-	__typename?: "ProductVariant" | undefined;
-	id: string;
-	name: string;
-};
-
 type QuickAddToCartButtonTypes = {
 	product: ProductListItemFragment;
 	checkoutId: string | undefined;
-	variants: ProductVariant[];
+	variants: VariantDetailsFragment[];
 };
 
 export function QuickAddToCartButton(props: QuickAddToCartButtonTypes) {
@@ -81,7 +75,7 @@ export function QuickAddToCartButton(props: QuickAddToCartButtonTypes) {
 		if (hasVariants) {
 			return (
 				<div className={`variants-container ${showVariants ? "variants-visible" : ""}`}>
-					{variants.slice(0, 5).map((variant: ProductVariant) => {
+					{variants.slice(0, 5).map((variant: VariantDetailsFragment) => {
 						const { id, name } = variant;
 
 						return (

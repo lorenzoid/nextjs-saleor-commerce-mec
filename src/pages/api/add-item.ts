@@ -29,32 +29,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		const reqCheckoutId = checkoutId;
 
 		// Find or create a checkout session
-		if (reqCheckoutId) {
-			const checkout = await Checkout.findOrCreate(reqCheckoutId);
-			if (!checkout) throw new Error("Checkout session couldn't be created or found");
+		const checkout = await Checkout.findOrCreate(reqCheckoutId);
 
-			// Set or update the checkoutId cookie
-			res.setHeader(
-				"Set-Cookie",
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-				cookie.serialize("checkoutId", checkout.id, {
-					path: "/",
-					secure: shouldUseHttps,
-					sameSite: "lax",
-					httpOnly: true,
-				}),
-			);
+		if (!checkout) throw new Error("Checkout session couldn't be created or found");
 
-			// Execute the GraphQL mutation
-			await executeGraphQL(CheckoutAddLineDocument, {
-				variables: {
-					id: checkout.id,
-					productVariantId,
-				},
-				cache: "no-cache",
-			});
-		}
+		// Set or update the checkoutId cookie
+		res.setHeader(
+			"Set-Cookie",
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+			cookie.serialize("checkoutId", checkout.id, {
+				path: "/",
+				secure: shouldUseHttps,
+				sameSite: "lax",
+				httpOnly: true,
+			}),
+		);
 
+		// Execute the GraphQL mutation
+		await executeGraphQL(CheckoutAddLineDocument, {
+			variables: {
+				id: checkout.id,
+				productVariantId,
+			},
+			cache: "no-cache",
+		});
 		res.status(200).json({ success: true });
 	} catch (error) {
 		console.error(error);
